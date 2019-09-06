@@ -1,14 +1,20 @@
+// to load all my envirment variables
+require('dotenv').config();
 // my imports
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./handlers/error');
+const studentAuthRoutes = require('./routes/studentauth');
 
 
 // what we are telling our app to use
 app.use(cors());
 app.use(bodyParser.json())
+
+//routes for students
+app.use('/api/auth', studentAuthRoutes)
 
 
 // error handlers
