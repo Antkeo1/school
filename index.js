@@ -9,6 +9,7 @@ const errorHandler = require('./handlers/error');
 const studentAuthRoutes = require('./routes/studentauth');
 const teacherAuthRoutes = require('./routes/teacherauth');
 const parentAuthRoutes = require('./routes/parentauth');
+const messagesRoutes = require('./routes/messages')
 
 // what we are telling our app to use
 app.use(cors());
@@ -18,10 +19,9 @@ app.use(bodyParser.json())
 app.use('/api/auth', studentAuthRoutes)
 app.use('/api/auth', teacherAuthRoutes)
 app.use('/api/auth', parentAuthRoutes)
+app.use('/api/users/:id/messages', messagesRoutes)
 
-app.get('/', (req, res) => {
-  res.send({hi: 'there'});
-})
+
 
 
 // error handlers
