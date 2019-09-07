@@ -10,8 +10,7 @@ const parentSchema = new mongoose.Schema({
   },
   username:{
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   password: {
     type: String,
@@ -19,7 +18,15 @@ const parentSchema = new mongoose.Schema({
   },
   profileImageUrl: {
     type: String
-  }
+  },
+  child: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Student"
+  }],
+  messages: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Message"
+  }]
 })
 
 // wait for pw to hash and set it to hashedPassword variable and save it
@@ -49,4 +56,4 @@ parentSchema.method.comparePassword = async function(candidatePassword, next) {
 // a model of a user that the consist of the userSchema
 const Parent = mongoose.model('Parent', parentSchema);
 
-module.export = Parent;
+module.exports = Parent;

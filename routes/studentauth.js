@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { signup } = require('../handlers/auth');
+const { studentSignup, studentSignin } = require('../handlers/studentAuth');
 
 router.post('/studentSignup', function(req, res) {
-  signup
-})
+  studentSignup
+});
+
+router.post('./studentSignin', function(req, res) {
+  studentSignin
+});
 
 module.exports = router;

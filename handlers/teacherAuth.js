@@ -1,16 +1,16 @@
 const db = require('../models');
 const jwt = require('jsonwebtoken');
 
-exports.signin = function() {
+// for teachers
+exports.teacherSignin = function() {
 
 };
 
-// for students
-exports.studentSignup = async function(req, res, next) {
+exports.teacherSignup = async function(req, res, next) {
   try {
     //create a user
-      let studentUser = await db.Student.create(req.body);
-      let { id, username, profileImageUrl } = studentUser
+      let teacherUser = await db.Teacher.create(req.body);
+      let { id, username, profileImageUrl } = teacherUser
     // create a token
       let token = jwt.sign({
           id,
@@ -30,7 +30,7 @@ exports.studentSignup = async function(req, res, next) {
   } catch(err) {
     // if validation fails
     if (err.code === 11000) {
-      err.message = 'Sorry that username is taken'
+      err.message = 'Sorry that username/email is taken'
     }
     return next({
       status: 400,

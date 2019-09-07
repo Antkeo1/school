@@ -6,7 +6,6 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true
-
   },
   username:{
     type: String,
@@ -18,7 +17,19 @@ const studentSchema = new mongoose.Schema({
   },
   profileImageUrl: {
     type: String
-  }
+  },
+  parents: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Parent"
+  }],
+  teacher: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Teacher"
+  },
+  messages: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Message"
+  }]
 })
 
 // wait for pw to hash and set it to hashedPassword variable and save it
@@ -35,7 +46,7 @@ studentSchema.pre('save', async function(next) {
 });
 
 // to compare hashedPassword to the candidatePassword
-studentSchema.method.comparePassword = async function(candidatePassword, next) {
+studentSchema.methods.comparePassword = async function(candidatePassword, next) {
   try {
     let isMatch = await bcrypt.compare(candidatePassword, this.password);
     return isMatch;
@@ -48,4 +59,4 @@ studentSchema.method.comparePassword = async function(candidatePassword, next) {
 // a model of a user that the consist of the userSchema
 const Student = mongoose.model('Student', studentSchema);
 
-module.export = Student;
+module.exports = Student;
