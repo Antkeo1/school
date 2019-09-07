@@ -18,12 +18,24 @@ app.use(cors());
 app.use(bodyParser.json())
 
 //routes
-app.use('/api/auth', studentAuthRoutes)
-app.use('/api/auth', teacherAuthRoutes)
-app.use('/api/auth', parentAuthRoutes)
-app.use('/api/users/:id/messages',
-          loginRequired, ensureCorrectUser, messagesRoutes)
+app.use('/api/auth', studentAuthRoutes);
+app.use('/api/auth', teacherAuthRoutes);
+app.use('/api/auth', parentAuthRoutes);
 
+app.use('/api/users/:id/messages',
+          loginRequired, ensureCorrectUser, messagesRoutes);
+
+app.get('/api/messages', loginRequired, async function(req, res, next) {
+  try {
+    let message = await db.Message.find().sort({createdAt: 'desc'}).populate("user", {
+      username: true,
+      profileImageUrl: true
+    });
+    return res.status(200).json(messages)
+  } catch (err) {
+    return next(err)
+  }
+})
 
 
 
@@ -38,7 +50,7 @@ app.use(errorHandler);
 
 // to listen to port to heroku or port 5000
 const PORT = process.env.PORT || 5000;
-// app.listen(PORT, function() {
-  // console.log(`Server is starting on ${PORT}`)
-// })
-app.listen(5000);
+ app.listen(PORT, function() {
+   console.log(`Server is starting on ${PORT}`)
+ })
+// app.listen(5000);

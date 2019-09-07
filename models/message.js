@@ -16,6 +16,8 @@ const messageSchema = new mongoose.Schema({
     required: true,
     enum: ['Student', 'Teacher', 'Parent']
   }
+}, {
+  timestamp: true,
 });
 
 messageSchema.pre('remove', async function(next) {

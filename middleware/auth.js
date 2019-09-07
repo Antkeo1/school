@@ -1,4 +1,3 @@
-require('dotenv');
 const jwt = require('jsonwebtoken');
 
 // to make sure user is logged in
@@ -14,7 +13,7 @@ exports.loginRequired = function(req, res, next) {
           message: 'Please log in first'
         })
       }
-    })
+    });
 
   } catch(err) {
     return next({

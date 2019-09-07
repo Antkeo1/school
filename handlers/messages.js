@@ -31,10 +31,23 @@ exports.createMessage = async function(req, res, next) {
   }
 }
 
+//GET METHOD
 exports.getMessage = async function(req, res, next) {
-
+  try {
+    let message = await db.Message.find(req.params.message_id)
+    return res.status(200).json(message)
+  } catch(err) {
+    return next(err)
+  }
 }
 
+// DELETE METHOD
 exports.deleteMessage = async function(req, res, next) {
-
+  try {
+    let foundMessage = await db.Message.findById(req.params.message_id)
+    await foundMessage.remove()
+    return res.status(200).json(foundMessage)
+  } catch(err) {
+    return next(err)
+  }
 }
