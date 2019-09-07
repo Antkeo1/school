@@ -35,7 +35,7 @@ app.get('/api/messages', loginRequired, async function(req, res, next) {
   } catch (err) {
     return next(err)
   }
-})
+});
 
 
 
